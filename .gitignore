@@ -92,3 +92,4 @@ compile_commands.json
 .clangd/
 .cache/
 lib/lufa
+lib/lufa
