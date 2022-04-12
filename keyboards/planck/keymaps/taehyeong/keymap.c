@@ -42,12 +42,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_TRNS, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
 
-    [_GAME]         = LAYOUT_ortho_4x12(
-        KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_RALT, KC_DEL, 
-        KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_P, KC_ENT, 
-        KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_CAPS, 
-        KC_LCTL, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
-
     [_RAISE]        = LAYOUT_ortho_4x12(
         KC_TRNS, KC_F9, KC_F10, KC_F11, KC_F12, KC_TRNS, KC_TRNS, VIMCP, LCTL(KC_V), LALT(KC_TAB), LGUI(KC_TAB), KC_TRNS, 
         KC_TRNS, KC_F5, KC_F6, KC_F7, KC_F8, KC_TRNS, KC_TRNS, KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI, KC_TRNS, 
@@ -61,9 +55,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
 
     [_LOWER]     = LAYOUT_ortho_4x12(
-        KC_TRNS, KC_LBRC, KC_RBRC, KC_LPRN, KC_RPRN, KC_AMPR, KC_EXLM, KC_ASTR, KC_7, KC_8, KC_9, KC_TRNS, 
-        KC_TRNS, KC_QUOT, KC_SCLN, KC_EQL, KC_MINS, KC_HASH, KC_DLR, KC_GRV, KC_4, KC_5, KC_6, KC_TRNS, 
-        KC_TRNS, LGUI_T(KC_DOT), LALT_T(KC_COMM), LSFT_T(KC_NO), LCTL_T(KC_NO), KC_TRNS, KC_TRNS, KC_TRNS, KC_1, KC_2, KC_3, KC_ENT, 
+        KC_TRNS, KC_LBRC, KC_RBRC, KC_LPRN, KC_RPRN, KC_AMPR, KC_ASTR, KC_EXLM, KC_7, KC_8, KC_9, KC_TRNS, 
+        KC_TRNS, KC_QUOT, KC_SCLN, KC_EQL, KC_MINS, KC_HASH, KC_CIRC, KC_DLR, KC_4, KC_5, KC_6, KC_TRNS, 
+        KC_TRNS, LGUI_T(KC_DOT), LALT_T(KC_COMM), LSFT_T(KC_ASTR), LCTL_T(KC_PERC), KC_TRNS, KC_TRNS, KC_TRNS, KC_1, KC_2, KC_3, KC_ENT, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_0, KC_DOT, KC_COMM, KC_TRNS),
 
     [_LMOVE]        = LAYOUT_ortho_4x12(
@@ -90,18 +84,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS, KC_TRNS, KC_TRNS, KC_ACL0, KC_ACL2, KC_TRNS, KC_TRNS, KC_ACL2, KC_ACL0, KC_TRNS, KC_TRNS, KC_TRNS, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN1, KC_BTN2, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
 
+    [_LRCOMBO]      = LAYOUT_ortho_4x12(
+        KC_NO   , KEYBOARD, KC_NO   , KC_NO   , GAME, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, 
+        KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO, KC_NO, KC_NO, KC_ASUP, KC_ASDN, KC_ASRP, KC_NO, KC_NO, 
+        KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, 
+        KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS , KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
+
+    [_GAME]         = LAYOUT_ortho_4x12(
+        KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_RALT, KC_DEL, 
+        KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_P, KC_ENT, 
+        KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_CAPS, 
+        KC_LCTL, KC_TRNS, GAME, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
+
     [_KEYBOARD]     = LAYOUT_ortho_4x12(
         KC_NO, RGB_HUD, RGB_HUI, RGB_VAD, RGB_VAI, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, 
         KC_NO, KC_TRNS, RGB_MOD, RGB_SAD, RGB_SAI, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, 
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, 
-        RESET, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
-
-    [_LRCOMBO]      = LAYOUT_ortho_4x12(
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, 
-        KC_NO, KEYBOARD, KC_NO, KC_NO, GAME, KC_NO, KC_NO, KC_ASUP, KC_ASDN, KC_ASRP, KC_NO, KC_NO, 
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, 
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS)
-
+        RESET, KC_TRNS, KEYBOARD, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS)
 };
 
 #ifdef AUDIO_ENABLE
@@ -126,8 +125,9 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 bool get_custom_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case KC_LPRN:
-        case KC_DLR:
         case KC_RPRN:
+        case KC_DLR:
+        case KC_CIRC:
         case KC_ASTR:
         case KC_EXLM:
         case KC_HASH:
@@ -150,8 +150,16 @@ bool get_custom_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
 
 uint16_t get_autoshift_timeout(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case KC_SLSH: case KC_DOT: case KC_COMMA:
+            return get_generic_autoshift_timeout() + 40;
+        
+    }
+
+    switch (keycode) { 
         case AUTO_SHIFT_NUMERIC:
             return 3 * get_generic_autoshift_timeout();
+        case AUTO_SHIFT_ALPHA:
+            return get_generic_autoshift_timeout() + 50;
         default:
             return get_generic_autoshift_timeout();
     }
@@ -159,31 +167,34 @@ uint16_t get_autoshift_timeout(uint16_t keycode, keyrecord_t *record) {
 
 void autoshift_press_user(uint16_t keycode, bool shifted, keyrecord_t *record) {
     switch (keycode) {
-        case KC_LPRN:
+        case KC_LPRN: // [ to {
             register_code16((!shifted) ? KC_LPRN : KC_LT);
             break;
-        case KC_RPRN:
+        case KC_RPRN: // ] to }
             register_code16((!shifted) ? KC_RPRN : KC_GT);
             break;
-        case KC_DLR:
-            register_code16((!shifted) ? KC_DLR : KC_CIRC);
+        case KC_DLR: // $ to `
+            register_code16((!shifted) ? KC_DLR : KC_GRV);
             break;
-        case KC_ASTR:
+        case KC_CIRC: // ^ to ~ 
+            register_code16((!shifted) ? KC_CIRC : KC_TILD);
+            break;
+        case KC_ASTR: // * to %
             register_code16((!shifted) ? KC_ASTR : KC_PERC);
             break;
-        case KC_EXLM:
-            register_code16((!shifted) ? KC_EXLM : KC_BSLS);
+        case KC_EXLM: // ! to ?
+            register_code16((!shifted) ? KC_EXLM : KC_QUES);
             break;
-        case KC_HASH:
+        case KC_HASH: // # to @ 
             register_code16((!shifted) ? KC_HASH : KC_AT);
             break;
-        case KC_AMPR:
+        case KC_AMPR: // & to |
             register_code16((!shifted) ? KC_AMPR : KC_PIPE);
             break;
-        case KC_1:
+        case KC_1: // 1 to Pad 1
             register_code16((!shifted) ? KC_1 : KC_P1);
             break;
-        case KC_2:
+        case KC_2: // Same below
             register_code16((!shifted) ? KC_2 : KC_P2);
             break;
         case KC_3:
@@ -228,13 +239,16 @@ void autoshift_release_user(uint16_t keycode, bool shifted, keyrecord_t *record)
             unregister_code16((!shifted) ? KC_RPRN : KC_GT);
             break;
         case KC_DLR:
-            unregister_code16((!shifted) ? KC_DLR : KC_CIRC);
+            unregister_code16((!shifted) ? KC_DLR : KC_GRV);
             break;
-        case KC_EXLM:
-            unregister_code16((!shifted) ? KC_EXLM : KC_BSLS);
+        case KC_CIRC:
+            unregister_code16((!shifted) ? KC_CIRC : KC_TILD);
             break;
         case KC_ASTR:
             unregister_code16((!shifted) ? KC_ASTR : KC_PERC);
+            break;
+        case KC_EXLM:
+            unregister_code16((!shifted) ? KC_EXLM : KC_QUES);
             break;
         case KC_HASH:
             unregister_code16((!shifted) ? KC_HASH : KC_AT);
