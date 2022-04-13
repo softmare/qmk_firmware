@@ -132,6 +132,7 @@ bool get_custom_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
         case KC_EXLM:
         case KC_HASH:
         case KC_AMPR:
+        case KC_SLSH:
         case KC_1:
         case KC_2:
         case KC_3:
@@ -190,6 +191,9 @@ void autoshift_press_user(uint16_t keycode, bool shifted, keyrecord_t *record) {
             break;
         case KC_AMPR: // & to |
             register_code16((!shifted) ? KC_AMPR : KC_PIPE);
+            break;
+        case KC_SLSH: // / to back slash
+            register_code16((!shifted) ? KC_SLSH : KC_BSLS);
             break;
         case KC_1: // 1 to Pad 1
             register_code16((!shifted) ? KC_1 : KC_P1);
@@ -255,6 +259,9 @@ void autoshift_release_user(uint16_t keycode, bool shifted, keyrecord_t *record)
             break;
         case KC_AMPR:
             unregister_code16((!shifted) ? KC_AMPR : KC_PIPE);
+            break;
+        case KC_SLSH:
+            unregister_code16((!shifted) ? KC_SLSH : KC_BSLS);
             break;
         case KC_1:
             unregister_code16((!shifted) ? KC_1 : KC_P1);
