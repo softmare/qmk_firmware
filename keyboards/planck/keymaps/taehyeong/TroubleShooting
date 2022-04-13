@@ -1,0 +1,6 @@
+# QMK TOOL 
+
+## stack dump cygwin error
+
+limited stack size (2mb) can cause this issue.
+check https://github.com/qmk/qmk_firmware/issues/13416 and replace make file.
