@@ -51,7 +51,8 @@
 #define TAPPING_TERM 170
 #define TAPPING_TERM_PER_KEY
 #define AUTO_SHIFT_REPEAT
-#define AUTO_SHIFT_TIMEOUT 100
+#define NO_AUTO_SHIFT_ALPHA
+#define AUTO_SHIFT_TIMEOUT 150
 #define AUTO_SHIFT_TIMEOUT_PER_KEY
 
 
@@ -64,7 +65,7 @@
 //#define MK_C_OFFSET_1 5
 #define MK_C_OFFSET_0 1
 #define MK_C_OFFSET_UNMOD 2
-#define MK_C_OFFSET_2 15 
+#define MK_C_OFFSET_2 15
 //#define MK_W_OFFSET_0 1
 //#define MK_W_INTERVAL_0 400
 //#define MK_W_INTERVAL_1 200
