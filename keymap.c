@@ -224,7 +224,7 @@ void autoshift_press_user(uint16_t keycode, bool shifted, keyrecord_t *record) {
             register_code16((!shifted) ? KC_0 : KC_P0);
             break;
         case KC_DOT:
-            register_code16((KC_DOT);
+            register_code16(KC_DOT);
             break;
         case KC_COMM:
             register_code16(KC_COMM);
@@ -298,7 +298,7 @@ void autoshift_release_user(uint16_t keycode, bool shifted, keyrecord_t *record)
             unregister_code16((!shifted) ? KC_0 : KC_P0);
             break;
         case KC_DOT:
-            unregister_code16((KC_DOT);
+            unregister_code16(KC_DOT);
             break;
         case KC_COMM:
             unregister_code16(KC_COMM);
