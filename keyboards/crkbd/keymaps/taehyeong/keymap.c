@@ -17,7 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include QMK_KEYBOARD_H
-#include <stdio.h>
 
 enum planck_layers { _COLEMAK, _QWERTY, _GAME, _RAISE, _LOWER, _LRCOMBO, _LMOVE, _RMOVE, _MOUSE, _MOUSE_TOGGLE, _FUNCTION, _KEYBOARD };
 
@@ -88,10 +87,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_RMOVE] = LAYOUT_split_3x6_3(
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_HOME, KC_UP, KC_END, KC_TRNS, KC_TRNS,
-        KC_TRNS, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_TRNS, KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS,
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
+        KC_TRNS, MOUSE_TOGGLE, KC_BTN4, KC_MS_U, KC_BTN5, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+        KC_TRNS, KC_TRNS, KC_MS_L, KC_MS_D, KC_MS_R, KC_TRNS, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_TRNS, KC_TRNS,
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_ACL0, KC_ACL2, KC_TRNS, KC_TRNS, KC_ACL2, KC_ACL0, KC_TRNS, KC_TRNS, KC_TRNS,
+        KC_TRNS, KC_BTN1, KC_TRNS, KC_TRNS, KC_BTN2, KC_TRNS
   ),
 
   [_MOUSE] = LAYOUT_split_3x6_3(
@@ -108,8 +107,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS, KC_BTN1, KC_TRNS, KC_TRNS, KC_BTN2, KC_TRNS
   ),
   [_LRCOMBO] = LAYOUT_split_3x6_3(
-        KC_NO   , KEYBOARD, KC_NO   , KC_NO   , GAME, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-        KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO, KC_NO, KC_NO, KC_ASUP, KC_ASDN, KC_ASRP, KC_NO, KC_NO,
+        KC_NO   , KEYBOARD, KC_NO   , KC_NO   , GAME, KC_NO, KC_NO, AS_ON, AS_OFF, KC_NO, KC_NO, KC_NO,
+        KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO, KC_NO, KC_NO, AS_UP, AS_DOWN, AS_RPT, KC_NO, KC_NO,
         KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
   ),
@@ -225,12 +224,6 @@ bool oled_task_user(void) {
     return false;
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
-    set_keylog(keycode, record);
-  }
-  return true;
-}
 #endif // OLED_ENABLE
 
 layer_state_t layer_state_set_user(layer_state_t state) {
@@ -244,7 +237,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case TG_KR:
             if (record->event.pressed) {
                 layer_invert(_QWERTY);
-                if (get_mods() & MOD_BIT(KC_LSHIFT) || get_mods() & MOD_BIT(KC_RSHIFT)) {  // if shift is pressed
+                if (get_mods() & MOD_BIT(KC_LSFT) || get_mods() & MOD_BIT(KC_RSFT)) {  // if shift is pressed
                     return false;
                 }
                 tap_code(KC_RALT);
@@ -258,5 +251,189 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
     }
+    #ifdef OLED_ENABLE
+    if (record->event.pressed) {
+        set_keylog(keycode, record);
+    }
+    #endif
     return true;
+}
+
+bool get_custom_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case KC_LPRN:
+        case KC_RPRN:
+        case KC_DLR:
+        case KC_CIRC:
+        case KC_ASTR:
+        case KC_EXLM:
+        case KC_HASH:
+        case KC_AMPR:
+        case KC_SLSH:
+        case KC_1:
+        case KC_2:
+        case KC_3:
+        case KC_4:
+        case KC_5:
+        case KC_6:
+        case KC_7:
+        case KC_8:
+        case KC_9:
+        case KC_0:
+            return true;
+        default:
+            return false;
+    }
+}
+
+uint16_t get_autoshift_timeout(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case KC_SLSH: case KC_DOT: case KC_COMMA:
+            return get_generic_autoshift_timeout() + 40;
+
+    }
+
+    switch (keycode) {
+        case AUTO_SHIFT_NUMERIC:
+            return 3 * get_generic_autoshift_timeout();
+        case AUTO_SHIFT_ALPHA:
+            return get_generic_autoshift_timeout() + 50;
+        default:
+            return get_generic_autoshift_timeout();
+    }
+}
+
+void autoshift_press_user(uint16_t keycode, bool shifted, keyrecord_t *record) {
+    switch (keycode) {
+        case KC_LPRN: // [ to {
+            register_code16((!shifted) ? KC_LPRN : KC_LT);
+            break;
+        case KC_RPRN: // ] to }
+            register_code16((!shifted) ? KC_RPRN : KC_GT);
+            break;
+        case KC_DLR: // $ to `
+            register_code16((!shifted) ? KC_DLR : KC_GRV);
+            break;
+        case KC_CIRC: // ^ to ~
+            register_code16((!shifted) ? KC_CIRC : KC_TILD);
+            break;
+        case KC_ASTR: // * to %
+            register_code16((!shifted) ? KC_ASTR : KC_PERC);
+            break;
+        case KC_EXLM: // ! to ?
+            register_code16((!shifted) ? KC_EXLM : KC_QUES);
+            break;
+        case KC_HASH: // # to @
+            register_code16((!shifted) ? KC_HASH : KC_AT);
+            break;
+        case KC_AMPR: // & to |
+            register_code16((!shifted) ? KC_AMPR : KC_PIPE);
+            break;
+        case KC_SLSH: // / to back slash
+            register_code16((!shifted) ? KC_SLSH : KC_BSLS);
+            break;
+        case KC_1: // 1 to Pad 1
+            register_code16((!shifted) ? KC_1 : KC_P1);
+            break;
+        case KC_2: // Same below
+            register_code16((!shifted) ? KC_2 : KC_P2);
+            break;
+        case KC_3:
+            register_code16((!shifted) ? KC_3 : KC_P3);
+            break;
+        case KC_4:
+            register_code16((!shifted) ? KC_4 : KC_P4);
+            break;
+        case KC_5:
+            register_code16((!shifted) ? KC_5 : KC_P5);
+            break;
+        case KC_6:
+            register_code16((!shifted) ? KC_6 : KC_P6);
+            break;
+        case KC_7:
+            register_code16((!shifted) ? KC_7 : KC_P7);
+            break;
+        case KC_8:
+            register_code16((!shifted) ? KC_8 : KC_P8);
+            break;
+        case KC_9:
+            register_code16((!shifted) ? KC_9 : KC_P9);
+            break;
+        case KC_0:
+            register_code16((!shifted) ? KC_0 : KC_P0);
+            break;
+        default:
+            if (shifted) {
+                add_weak_mods(MOD_BIT(KC_LSFT));
+            }
+            // & 0xFF gets the Tap key for Tap Holds, required when using Retro Shift
+            register_code16((IS_RETRO(keycode)) ? keycode & 0xFF : keycode);
+    }
+}
+
+void autoshift_release_user(uint16_t keycode, bool shifted, keyrecord_t *record) {
+    switch (keycode) {
+        case KC_LPRN:
+            unregister_code16((!shifted) ? KC_LPRN : KC_LT);
+            break;
+        case KC_RPRN:
+            unregister_code16((!shifted) ? KC_RPRN : KC_GT);
+            break;
+        case KC_DLR:
+            unregister_code16((!shifted) ? KC_DLR : KC_GRV);
+            break;
+        case KC_CIRC:
+            unregister_code16((!shifted) ? KC_CIRC : KC_TILD);
+            break;
+        case KC_ASTR:
+            unregister_code16((!shifted) ? KC_ASTR : KC_PERC);
+            break;
+        case KC_EXLM:
+            unregister_code16((!shifted) ? KC_EXLM : KC_QUES);
+            break;
+        case KC_HASH:
+            unregister_code16((!shifted) ? KC_HASH : KC_AT);
+            break;
+        case KC_AMPR:
+            unregister_code16((!shifted) ? KC_AMPR : KC_PIPE);
+            break;
+        case KC_SLSH:
+            unregister_code16((!shifted) ? KC_SLSH : KC_BSLS);
+            break;
+        case KC_1:
+            unregister_code16((!shifted) ? KC_1 : KC_P1);
+            break;
+        case KC_2:
+            unregister_code16((!shifted) ? KC_2 : KC_P2);
+            break;
+        case KC_3:
+            unregister_code16((!shifted) ? KC_3 : KC_P3);
+            break;
+        case KC_4:
+            unregister_code16((!shifted) ? KC_4 : KC_P4);
+            break;
+        case KC_5:
+            unregister_code16((!shifted) ? KC_5 : KC_P5);
+            break;
+        case KC_6:
+            unregister_code16((!shifted) ? KC_6 : KC_P6);
+            break;
+        case KC_7:
+            unregister_code16((!shifted) ? KC_7 : KC_P7);
+            break;
+        case KC_8:
+            unregister_code16((!shifted) ? KC_8 : KC_P8);
+            break;
+        case KC_9:
+            unregister_code16((!shifted) ? KC_9 : KC_P9);
+            break;
+        case KC_0:
+            unregister_code16((!shifted) ? KC_0 : KC_P0);
+            break;
+        default:
+            // & 0xFF gets the Tap key for Tap Holds, required when using Retro Shift
+            // The IS_RETRO check isn't really necessary here, always using
+            // keycode & 0xFF would be fine.
+            unregister_code16((IS_RETRO(keycode)) ? keycode & 0xFF : keycode);
+    }
 }
