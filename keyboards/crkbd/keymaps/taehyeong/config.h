@@ -22,6 +22,13 @@
 #define AUTO_SHIFT_TIMEOUT 150
 #define AUTO_SHIFT_TIMEOUT_PER_KEY
 
+// disable auto shift for alpha and special keys
+// ref : https://docs.qmk.fm/#/feature_auto_shift
+#define NO_AUTO_SHIFT_ALPHA
+#define No_AUTO_SHIFT_SPECIAL
+
+
+
 // #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
 // #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
