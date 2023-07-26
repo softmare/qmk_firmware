@@ -18,11 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 
-enum planck_layers { _COLEMAK, _QWERTY, _GAME, _RAISE, _LOWER, _LRCOMBO, _LMOVE, _RMOVE, _MOUSE, _MOUSE_TOGGLE, _FUNCTION, _KEYBOARD };
+enum planck_layers { _COLEMAK, _QWERTY, _GAME, _GAME_LT, _RAISE, _LOWER, _LRCOMBO, _LMOVE, _RMOVE, _MOUSE, _MOUSE_TOGGLE, _FUNCTION, _KEYBOARD };
 
 enum planck_keycodes { TG_KR = SAFE_RANGE, VIMCP };
 
 #define GAME TG(_GAME)
+#define GAME_LT MO(_GAME_LT)
 #define RAISE MO(_RAISE)
 #define LOWER MO(_LOWER)
 #define LMOVE(key) LT(_LMOVE, key)
@@ -115,9 +116,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [_GAME] = LAYOUT_split_3x6_3(
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_RALT, KC_DEL,
-        KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_P, KC_ENT,
-        KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_CAPS,
-        GAME, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
+        KC_LSFT, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_P, KC_ENT,
+        KC_LCTL, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_CAPS,
+        KC_TRNS, GAME_LT, KC_SPC, KC_TRNS, KC_TRNS, GAME
+  ),
+  [_GAME_LT] = LAYOUT_split_3x6_3(
+        KC_TRNS, KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+        KC_TRNS, KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+        KC_TRNS, GAME_LT, KC_TRNS, KC_TRNS, KC_TRNS, GAME
   ),
 
   [_KEYBOARD] = LAYOUT_split_3x6_3(
@@ -228,6 +235,11 @@ bool oled_task_user(void) {
 #endif // OLED_ENABLE
 
 layer_state_t layer_state_set_user(layer_state_t state) {
+    if (autoshift_enabled && (state & (1<<_GAME)) || (state & (1<<_GAME_LT))) {
+        autoshift_disable();
+    } else {
+        autoshift_enable();
+    }
     state = update_tri_layer_state(state, _LOWER, _RAISE, _LRCOMBO);
     state = update_tri_layer_state(state, _LMOVE, _RMOVE, _MOUSE);
     return state;
@@ -333,36 +345,36 @@ void autoshift_press_user(uint16_t keycode, bool shifted, keyrecord_t *record) {
         case KC_SLSH: // / to back slash
             register_code16((!shifted) ? KC_SLSH : KC_BSLS);
             break;
-        case KC_1: // 1 to Pad 1
-            register_code16((!shifted) ? KC_1 : KC_P1);
-            break;
-        case KC_2: // Same below
-            register_code16((!shifted) ? KC_2 : KC_P2);
-            break;
-        case KC_3:
-            register_code16((!shifted) ? KC_3 : KC_P3);
-            break;
-        case KC_4:
-            register_code16((!shifted) ? KC_4 : KC_P4);
-            break;
-        case KC_5:
-            register_code16((!shifted) ? KC_5 : KC_P5);
-            break;
-        case KC_6:
-            register_code16((!shifted) ? KC_6 : KC_P6);
-            break;
-        case KC_7:
-            register_code16((!shifted) ? KC_7 : KC_P7);
-            break;
-        case KC_8:
-            register_code16((!shifted) ? KC_8 : KC_P8);
-            break;
-        case KC_9:
-            register_code16((!shifted) ? KC_9 : KC_P9);
-            break;
-        case KC_0:
-            register_code16((!shifted) ? KC_0 : KC_P0);
-            break;
+        // case KC_1: // 1 to Pad 1
+        //     register_code16((!shifted) ? KC_1 : KC_P1);
+        //     break;
+        // case KC_2: // Same below
+        //     register_code16((!shifted) ? KC_2 : KC_P2);
+        //     break;
+        // case KC_3:
+        //     register_code16((!shifted) ? KC_3 : KC_P3);
+        //     break;
+        // case KC_4:
+        //     register_code16((!shifted) ? KC_4 : KC_P4);
+        //     break;
+        // case KC_5:
+        //     register_code16((!shifted) ? KC_5 : KC_P5);
+        //     break;
+        // case KC_6:
+        //     register_code16((!shifted) ? KC_6 : KC_P6);
+        //     break;
+        // case KC_7:
+        //     register_code16((!shifted) ? KC_7 : KC_P7);
+        //     break;
+        // case KC_8:
+        //     register_code16((!shifted) ? KC_8 : KC_P8);
+        //     break;
+        // case KC_9:
+        //     register_code16((!shifted) ? KC_9 : KC_P9);
+        //     break;
+        // case KC_0:
+        //     register_code16((!shifted) ? KC_0 : KC_P0);
+        //     break;
         default:
             if (shifted) {
                 add_weak_mods(MOD_BIT(KC_LSFT));
