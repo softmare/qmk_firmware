@@ -265,12 +265,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
     }
+
     #ifdef OLED_ENABLE
     if (record->event.pressed) {
         set_keylog(keycode, record);
     }
     #endif
     return true;
+}
+
+
+bool get_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
+    if(keycode == KC_TAB) return false; // Don't auto shift tab
+    switch (keycode) {
+#    ifndef NO_AUTO_SHIFT_ALPHA
+        case KC_A ... KC_Z:
+#    endif
+#    ifndef NO_AUTO_SHIFT_NUMERIC
+        case KC_1 ... KC_0:
+#    endif
+#    ifndef NO_AUTO_SHIFT_SPECIAL
+        case KC_MINUS ... KC_SLASH:
+        case KC_NONUS_BACKSLASH:
+#    endif
+            return true;
+    }
+    return get_custom_auto_shifted_key(keycode, record);
 }
 
 bool get_custom_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
@@ -299,6 +319,8 @@ bool get_custom_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
             return false;
     }
 }
+
+
 
 uint16_t get_autoshift_timeout(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
