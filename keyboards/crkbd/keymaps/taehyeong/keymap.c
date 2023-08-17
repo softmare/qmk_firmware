@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 
-enum planck_layers { _COLEMAK, _QWERTY, _GAME, _GAME_LT, _RAISE, _LOWER, _LRCOMBO, _LMOVE, _RMOVE, _MOUSE, _MOUSE_TOGGLE, _FUNCTION, _KEYBOARD };
+enum planck_layers { _COLEMAK, _QWERTY, _GAME, _GAME_LT, _RAISE, _LOWER, _LRCOMBO, _LMOVE, _RMOVE, _FUNCTION, _KEYBOARD };
 
 enum planck_keycodes { TG_KR = SAFE_RANGE, VIMCP };
 
@@ -29,7 +29,6 @@ enum planck_keycodes { TG_KR = SAFE_RANGE, VIMCP };
 #define LOWER MO(_LOWER)
 #define LMOVE(key) LT(_LMOVE, key)
 #define RMOVE(key) LT(_RMOVE, key)
-#define MOUSE_TOGGLE TG(_MOUSE_TOGGLE)
 #define KEYBOARD TG(_KEYBOARD)
 #define FUNCTION MO(_FUNCTION)
 
@@ -89,25 +88,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_RMOVE] = LAYOUT_split_3x6_3(
-        KC_TRNS, MOUSE_TOGGLE, KC_BTN4, KC_MS_U, KC_BTN5, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-        KC_TRNS, KC_TRNS, KC_MS_L, KC_MS_D, KC_MS_R, KC_TRNS, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_TRNS, KC_TRNS,
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_ACL0, KC_ACL2, KC_TRNS, KC_TRNS, KC_ACL2, KC_ACL0, KC_TRNS, KC_TRNS, KC_TRNS,
-        KC_TRNS,  KC_TRNS, KC_BTN1, KC_BTN2, KC_TRNS, KC_TRNS
-  ),
-
-  [_MOUSE] = LAYOUT_split_3x6_3(
-        KC_TRNS, MOUSE_TOGGLE, KC_BTN4, KC_MS_U, KC_BTN5, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-        KC_TRNS, KC_TRNS, KC_MS_L, KC_MS_D, KC_MS_R, KC_TRNS, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_TRNS, KC_TRNS,
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-        KC_TRNS, KC_ACL2, KC_BTN1, KC_BTN2, KC_ACL0, KC_TRNS
-  ),
-
-
-  [_MOUSE_TOGGLE] = LAYOUT_split_3x6_3(
-        KC_TRNS, MOUSE_TOGGLE, KC_BTN4, KC_MS_U, KC_BTN5, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-        KC_TRNS, KC_TRNS, KC_MS_L, KC_MS_D, KC_MS_R, KC_TRNS, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_TRNS, KC_TRNS,
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_ACL0, KC_ACL2, KC_TRNS, KC_TRNS, KC_ACL2, KC_ACL0, KC_TRNS, KC_TRNS, KC_TRNS,
-        KC_TRNS,  KC_TRNS, KC_BTN1, KC_BTN2, KC_TRNS, KC_TRNS
+        KC_TRNS, TG(_RMOVE), KC_BTN4, KC_MS_U, KC_BTN5, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+        KC_TRNS, KC_TRNS   , KC_MS_L, KC_MS_D, KC_MS_R, KC_TRNS, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_TRNS, KC_TRNS,
+        KC_TRNS, KC_TRNS   , KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+        KC_TRNS, KC_ACL2   , KC_BTN1, KC_BTN2, KC_ACL0, KC_TRNS
   ),
   [_LRCOMBO] = LAYOUT_split_3x6_3(
         KC_NO   , KEYBOARD, KC_NO   , KC_NO   , GAME, KC_NO, KC_NO, AS_ON, AS_OFF, KC_NO, KC_NO, KC_NO,
@@ -242,7 +226,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         autoshift_enable();
     }
     state = update_tri_layer_state(state, _LOWER, _RAISE, _LRCOMBO);
-    state = update_tri_layer_state(state, _LMOVE, _RMOVE, _MOUSE);
     return state;
 }
 
