@@ -12,7 +12,7 @@
 # define SPLIT_USB_DETECT
 // #define EE_HANDS
 
-//#define QUICK_TAP_TERM 0
+#define QUICK_TAP_TERM 0 // disable double tap repeat
 #define IGNORE_MOD_TAP_INTERRUPT
 #define TAPPING_TERM 170
 #define TAPPING_TERM_PER_KEY
@@ -43,9 +43,9 @@
 #define MK_C_INTERVAL_2 7
 //#define MK_C_INTERVAL_1 7
 //#define MK_C_OFFSET_1 5
-#define MK_C_OFFSET_0 1
-#define MK_C_OFFSET_UNMOD 2
-#define MK_C_OFFSET_2 15
+#define MK_C_OFFSET_0 2
+#define MK_C_OFFSET_UNMOD 4
+#define MK_C_OFFSET_2 24
 //#define MK_W_OFFSET_0 1
 //#define MK_W_INTERVAL_0 400
 //#define MK_W_INTERVAL_1 200
