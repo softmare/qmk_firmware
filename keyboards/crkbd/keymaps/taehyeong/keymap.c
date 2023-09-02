@@ -109,17 +109,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS, KC_TRNS   , KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
         KC_TRNS, KC_ACL2   , KC_BTN1, KC_BTN2, KC_ACL0, KC_TRNS
   ),
-  [_VIRT] = LAYOUT_split_3x6_3(
-        KC_NO   , KC_NO   , KC_NO   , KC_NO   , GAME , KC_NO, KC_NO, AS_ON, AS_OFF, KC_NO, KC_NO, KC_NO,
-        KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO, KC_NO, KC_NO, AS_UP, AS_DOWN, AS_RPT,   KC_NO, KC_NO,
-        KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO, KC_NO, KC_NO, DT_UP, DT_DOWN, DT_PRNT, KC_NO, KC_NO,
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
-  ),
+//   [_VIRT] = LAYOUT_split_3x6_3(
+//         KC_NO   , KC_NO   , KC_NO   , KC_NO   , GAME , KC_NO, KC_NO, AS_ON, AS_OFF, KC_NO, KC_NO, KC_NO,
+//         KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO, KC_NO, KC_NO, AS_UP, AS_DOWN, AS_RPT,   KC_NO, KC_NO,
+//         KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO, KC_NO, KC_NO, DT_UP, DT_DOWN, DT_PRNT, KC_NO, KC_NO,
+//         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
+//   ),
 
   [_FUNCTION] = LAYOUT_split_3x6_3(
-        KC_TRNS, KC_TRNS, KC_MPLY, KC_VOLU, KC_MUTE, KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-        KC_TRNS, KC_TRNS, KC_MPRV, KC_VOLD, KC_MNXT, KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+        KC_TRNS, KC_TRNS, KC_MPLY, KC_VOLU, KC_MUTE, KC_TRNS,   KC_NO, AS_ON, AS_OFF, KC_NO, KC_NO, KC_NO,
+        KC_TRNS, KC_TRNS, KC_MPRV, KC_VOLD, KC_MNXT, KC_TRNS,   KC_NO, AS_UP, AS_DOWN, AS_RPT,   KC_NO, KC_NO,
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_NO, DT_UP, DT_DOWN, DT_PRNT, KC_NO, KC_NO,
                                    KC_TRNS, GAME   , KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS
   ),
 
@@ -137,10 +137,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-    state = update_tri_layer_state(state, _LOWER, _RAISE, _VIRT);
-    return state;
-}
+// layer_state_t layer_state_set_user(layer_state_t state) {
+//     state = update_tri_layer_state(state, _LOWER, _RAISE, _VIRT);
+//     return state;
+// }
 
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
