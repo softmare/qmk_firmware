@@ -67,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, KC_LT, KC_LCBR, KC_LPRN, KC_LBRC, KC_NO,                          KC_TRNS, KC_RBRC, KC_RPRN,  KC_RCBR, KC_GT,        KC_NO,
         KC_NO, KC_SCLN, KC_DQT, KC_QUES, KC_TILD, KC_NO,                     KC_NO, KC_HASH, KC_EXLM, KC_QUOT, KC_UNDS, KC_ENT,
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                               KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-                            KC_NO, KC_TRNS, KC_TRNS,                         KC_TRNS, KC_TRNS, KC_NO
+                            KC_NO,KC_TRNS, KC_TRNS,                          KC_TRNS, KC_TRNS, KC_NO
   ),
 
 
@@ -85,15 +85,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS, KC_BSLS, KC_QUOT, KC_COMM, KC_SCLN, KC_NO,                                                    KC_LBRC, KC_P7, KC_P8, KC_P9, KC_EQL, KC_RBRC,
         KC_NO, LGUI_T(KC_PSLS), LALT_T(KC_PMNS), LSFT_T(KC_PPLS), LCTL_T(KC_PAST), KC_NO,                    KC_MINS, LCTL_T(KC_P4), RSFT_T(KC_P5), LALT_T(KC_P6), LGUI_T(KC_PDOT), KC_PENT,
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                                                              KC_GRV, KC_P1, KC_P2, KC_P3, KC_NO, KC_NO,
-                            KC_TRNS, KC_NO, KC_TRNS,                         KC_TRNS, KC_P0, KC_NO
+                            KC_TRNS, KC_NO, KC_NO,                         KC_TRNS, KC_P0, KC_NO
   ),
 
   [_RIGHT] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        KC_NO, KC_1,  KC_2,  KC_3,  KC_4,  KC_5,                             KC_6, KC_7, KC_8, KC_9, KC_0, KC_NO,
+        KC_NO, KC_1,  KC_2,  KC_3,  KC_4,  KC_5,                                                     KC_6, KC_7, KC_8, KC_9, KC_0, KC_NO,
         KC_NO, LGUI_T(KC_F1), LALT_T(KC_F2), LSFT_T(KC_F3), LCTL_T(KC_F4), KC_F5,                            KC_F6, LCTL_T(KC_F7), RSFT_T(KC_F8), LALT_T(KC_F9), LGUI_T(KC_F10), KC_NO,
-        KC_NO, KC_F11, KC_F12, KC_F13, KC_F14, KC_F15,                        KC_F16, KC_F17, KC_F18, KC_F19, KC_F20, KC_NO,
-                            KC_NO, KC_NO, KC_NO,                         KC_NO, KC_NO, KC_TRNS
+        KC_NO, KC_F11, KC_F12, KC_F13, KC_F14, KC_F15,                                               KC_F16, KC_F17, KC_F18, KC_F19, KC_F20, KC_NO,
+                            KC_NO, QK_AREP, QK_REP,                        KC_NO, KC_NO, KC_TRNS
   ),
 
   [_LMOVE] = LAYOUT_split_3x6_3(
@@ -109,12 +109,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS, KC_TRNS   , KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
         KC_TRNS, KC_ACL2   , KC_BTN1, KC_BTN2, KC_ACL0, KC_TRNS
   ),
-//   [_VIRT] = LAYOUT_split_3x6_3(
-//         KC_NO   , KC_NO   , KC_NO   , KC_NO   , GAME , KC_NO, KC_NO, AS_ON, AS_OFF, KC_NO, KC_NO, KC_NO,
-//         KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO, KC_NO, KC_NO, AS_UP, AS_DOWN, AS_RPT,   KC_NO, KC_NO,
-//         KC_NO   , KC_NO   , KC_NO   , KC_NO   , KC_NO, KC_NO, KC_NO, DT_UP, DT_DOWN, DT_PRNT, KC_NO, KC_NO,
-//         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
-//   ),
 
   [_FUNCTION] = LAYOUT_split_3x6_3(
         KC_TRNS, KC_TRNS, KC_MPLY, KC_VOLU, KC_MUTE, KC_TRNS,   KC_NO, AS_ON, AS_OFF, KC_NO, KC_NO, KC_NO,
@@ -150,29 +144,24 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
   return rotation;
 }
 
-#define L_BASE 0
-#define L_LOWER 2
-#define L_RAISE 4
-#define L_ADJUST 8
-
 void oled_render_layer_state(void) {
     oled_write_P(PSTR("Layer: "), false);
     switch (layer_state) {
-        case L_BASE:
+        case _COLEMAK:
             oled_write_ln_P(PSTR("Default"), false);
             break;
-        case L_LOWER:
+        case _LOWER:
             oled_write_ln_P(PSTR("Lower"), false);
             break;
-        case L_RAISE:
+        case _RAISE:
             oled_write_ln_P(PSTR("Raise"), false);
             break;
-        case L_ADJUST:
-        case L_ADJUST|L_LOWER:
-        case L_ADJUST|L_RAISE:
-        case L_ADJUST|L_LOWER|L_RAISE:
-            oled_write_ln_P(PSTR("Adjust"), false);
-            break;
+        // case L_ADJUST:
+        // case L_ADJUST|L_LOWER:
+        // case L_ADJUST|L_RAISE:
+        // case L_ADJUST|L_LOWER|L_RAISE:
+        //     oled_write_ln_P(PSTR("Adjust"), false);
+        //     break;
     }
 }
 
@@ -267,4 +256,41 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     #endif
     return true;
+}
+
+// RepeatKey custom implmentation)
+// alt 
+
+uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
+    // ctrl + shift
+    if ((mods & MOD_MASK_CTRL) && (mods & MOD_MASK_SHIFT)) {
+        switch (keycode) {
+            case KC_TAB: return C(KC_TAB);
+            case KC_Z: return C(KC_Y);  // Ctrl + Z reverses to Ctrl + Y.
+        }
+    }
+    // ctrl
+    if ((mods & MOD_MASK_CTRL)) { 
+        switch (keycode) {
+            case KC_Z: return C(S(KC_Y));  // Ctrl + Z reverses to Ctrl + Y.
+            case KC_TAB: return C(S(KC_TAB));  // Ctrl + Tab reverses to Ctrl + Shift + Tab.
+        }
+    }
+    // no modifications case
+    if(!mods) {  
+        switch (keycode) {
+            case KC_J: case KC_K:
+            case KC_L: // case KC_H:
+            return KC_NO;  // Disable repeat for these keys.
+
+            case KC_E: return KC_N;
+            case KC_N: return KC_E;
+            case KC_H: return KC_I;
+            case KC_I: return KC_H;
+            default:
+            break;
+        }
+    }
+
+    return KC_TRNS;  // Defer to default definitions.
 }

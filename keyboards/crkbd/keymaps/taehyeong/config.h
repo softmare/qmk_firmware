@@ -13,7 +13,6 @@
 // #define EE_HANDS
 
 #define QUICK_TAP_TERM 0 // disable double tap repeat
-#define IGNORE_MOD_TAP_INTERRUPT
 #define TAPPING_TERM 170
 #define TAPPING_TERM_PER_KEY
 
@@ -21,6 +20,8 @@
 #define AUTO_SHIFT_REPEAT
 #define AUTO_SHIFT_TIMEOUT 150
 #define AUTO_SHIFT_TIMEOUT_PER_KEY
+
+#define NO_ALT_REPEAT_KEY
 
 // disable auto shift for alpha and special keys
 // ref : https://docs.qmk.fm/#/feature_auto_shift
