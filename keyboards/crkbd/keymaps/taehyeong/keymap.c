@@ -64,9 +64,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_RAISE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        KC_NO, KC_LT, KC_GT, KC_LPRN, KC_RPRN, KC_CIRC,                          KC_AT, KC_LBRC, KC_RBRC, KC_AMPR, KC_PERC, KC_NO,
-        KC_BSLS, KC_SCLN, KC_COLN, KC_EQL, KC_PLUS, KC_DLR,                      KC_TILD, KC_MINS, KC_ASTR, KC_EXLM, KC_QUES, KC_DQT,
-        KC_NO, KC_QUOT, KC_PIPE, KC_LCBR, KC_RCBR, KC_HASH,                      KC_GRV, KC_UNDS, KC_COMM, KC_DOT, KC_SLSH, KC_NO,
+        KC_GRV, KC_LT, KC_GT, KC_LPRN, KC_RPRN, KC_CIRC,                          KC_AT, KC_LBRC, KC_RBRC, KC_AMPR, KC_PERC, KC_QUES,
+        KC_BSLS, KC_SCLN, KC_COLN, KC_EQL, KC_PLUS, KC_DLR,                      KC_TILD, KC_MINS, KC_ASTR, KC_EXLM, KC_UNDS, KC_DQT,
+        KC_NO, KC_QUOT, KC_PIPE, KC_LCBR, KC_RCBR, KC_HASH,                      KC_NO, KC_NO, KC_COMM, KC_DOT, KC_SLSH, KC_NO,
                             KC_NO, KC_TRNS, KC_TRNS,                          KC_TRNS, KC_TRNS, KC_NO
   ),
 
